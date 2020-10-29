@@ -1,21 +1,21 @@
 4
-1 Assignment 25
-2 Project 20
-3 Exam 40
-4 Quiz 15
+1 Assignment 0.25
+2 Project 0.20
+3 Exam 0.40
+4 Quiz 0.15
 15
-1 Q1 Quiz 100 100
-2 A1 Assignment 94 100
-3 Q2 Quiz 100 100
-4 Q3 Quiz 100 100
-5 Q4 Quiz 100 100
-6 Q5 Quiz 100 100
-7 A2 Assignment 101 100
-8 Q6 Quiz 100 100
-9 Q7 Quiz 100 100
-10 Q8 Quiz 100 100
-11 A3 Assignment 105 100
-12 Exam1 Exam 91 100
-13 Q9 Quiz 100 100
-14 Q10 Quiz 100 100
-15 P1 Project 97 100
+Q1 Quiz 100 100
+A1 Assignment 94 100
+Q2 Quiz 100 100
+Q3 Quiz 100 100
+Q4 Quiz 100 100
+Q5 Quiz 100 100
+A2 Assignment 101 100
+Q6 Quiz 100 100
+Q7 Quiz 100 100
+Q8 Quiz 100 100
+A3 Assignment 105 100
+Exam1 Exam 91 100
+Q9 Quiz 100 100
+Q10 Quiz 100 100
+P1 Project 97 100

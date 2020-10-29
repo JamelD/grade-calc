@@ -1,0 +1,16 @@
+3
+1 Quiz 0.45
+2 Lab 0.25
+3 Design 0.30
+11
+Quiz1 Quiz 116 100
+Lab1 Lab 10 10
+Quiz2 Quiz 106 100
+Lab2 Lab 10 10
+Lab3 Lab 11 10
+Quiz3 Quiz 118 100
+Lab4 Lab 12 10
+Quiz4 Quiz 127 100
+Lab5 Lab 15 10
+Quiz5 Quiz 115 100
+Quiz6 Quiz 114 100
