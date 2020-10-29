@@ -21,15 +21,14 @@ void PrintGrade(const int, struct Category*, const int, struct Assignment*);
 struct Category{ 
 	int Num;
 	string Name;
-	int Percent;
+	double Percent;
 };
 
 struct Assignment{
-	int Num;
 	string Name;
 	string Type;
-	int Points_recv;
-	int Total_points;
+	double Points_recv;
+	double Total_points;
 };
 
 int main(){
@@ -68,7 +67,6 @@ int main(){
 
     Assignment *assign = new Assignment[assign_size];
     for(int i = 0; i < assign_size; i++){
-        fileName >> assign[i].Num;
         fileName >> assign[i].Name;
         fileName >> assign[i].Type;
         fileName >> assign[i].Points_recv;
@@ -81,8 +79,7 @@ int main(){
 		cin >> selection; 
 		
 		//eror checking for invalid menu entries
-		while(selection != '1' && selection != '2' && selection != '3' 
-				&& selection != 'q' && selection != 'Q'){
+		while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != 'q' && selection != 'Q'){
 			cout << "That is not a valid menu selecion!" << endl;
 			cout << "Selection > ";
 			cin >> selection; 
@@ -98,6 +95,9 @@ int main(){
 		}else if(selection == '3'){
 			//Print Assignments by Category
 			PrintAssignmentByCategory(cat_size, cat, assign_size, assign);
+		}else if(selection == '4'){
+			//Print grades
+			PrintGrade(cat_size, cat, assign_size, assign);
 		}else if(selection == 'q' || selection == 'Q'){
 	
 			break;
@@ -114,14 +114,16 @@ int main(){
 
 void Menu(){ 
 	cout << endl;
+	cout << "Menu:" << endl;
     cout << "1 - Print Categories" << endl;
 	cout << "2 - Print Assignments" << endl;
 	cout << "3 - Print Assignments by Category" << endl;
-	//cout << "4 - List Pokemon By Type" << endl;
+	cout << "4 - Print Grades" << endl;
 	cout << "Q - Quit" << endl;
 }
 
 void PrintCategory(const int cat_size, Category * cat){
+	cout << endl;
 	cout << "Categories:" << endl;
 	for(int i = 0; i < cat_size; i++){
 		cout << left << cat[i].Num << "\t";
@@ -131,11 +133,12 @@ void PrintCategory(const int cat_size, Category * cat){
 }
 
 void PrintAssignment(const int assign_size, Assignment * assign){ 
+	cout << endl;
 	cout << "Assignments:" << endl;
 	for(int i = 0; i < assign_size; i++){
-		cout << left << "No: " << assign[i].Num << "\t";
 		cout << left << setw(15) << assign[i].Name;
         cout << left << setw(15) << assign[i].Type;
+		cout << fixed << showpoint << setprecision(2); 
 		cout << right << "Points : " << assign[i].Points_recv << " / ";
 		cout << right << assign[i].Total_points << endl;	
 	}
@@ -143,7 +146,9 @@ void PrintAssignment(const int assign_size, Assignment * assign){
 
 void PrintAssignmentByCategory(const int cat_size, struct Category* cat, const int assign_size, struct Assignment* assign){
     int select;
-    cout << "Categories:" << endl;
+    
+	cout << endl;
+	cout << "Categories:" << endl;
 	for(int i = 0; i < cat_size; i++){
 		cout << left << cat[i].Num << "\t";
 		cout << left << setw(15) << cat[i].Name;
@@ -152,13 +157,14 @@ void PrintAssignmentByCategory(const int cat_size, struct Category* cat, const i
     cout << "Select Category (use number): ";
     cin >> select;
 
-    cout << "Assignments:" << endl;
+    cout << endl;
+	cout << "Assignments:" << endl;
 	for(int i = 0; i < assign_size; i++){
 		if(cat[select-1].Name == assign[i].Type){
-            cout << left << "No: " << assign[i].Num << "\t";
             cout << left << setw(15) << assign[i].Name;
             cout << left << setw(15) << assign[i].Type;
-            cout << right << "Points : " << assign[i].Points_recv << " / ";
+            cout << fixed << showpoint << setprecision(2); 
+			cout << right << "Points : " << assign[i].Points_recv << " / ";
             cout << right << assign[i].Total_points << endl;
         }	
 	}
@@ -166,16 +172,32 @@ void PrintAssignmentByCategory(const int cat_size, struct Category* cat, const i
 }
 
 void PrintGrade(const int cat_size, struct Category* cat, const int assign_size, struct Assignment* assign){
-    for(int i = 0; i < cat_size; i++){
-        for(int j = 0; j < assign_size; j++){
+    double grade[cat_size], total[cat_size], grade_calc[cat_size], grade_weight;
+	
+	cout << endl;
+	cout << "Grade: " << endl;
+	for(int i = 0; i < cat_size; i++){
+        grade[i] = 0;
+		total[i] = 0;
+		for(int j = 0; j < assign_size; j++){
             if(cat[i].Name == assign[j].Type){
-                
+               	grade[i] += assign[j].Points_recv;
+				total[i] += assign[j].Total_points;
             }	
         }
     }
 
+	grade_weight = 0;
     for(int i = 0; i < cat_size; i++){
+		grade_calc[i] = 0;
+		grade_calc[i] += (grade[i]/total[i]);
+		grade_weight += (grade_calc[i]*cat[i].Percent);
+
 		cout << left << cat[i].Num << "\t";
 		cout << left << setw(15) << cat[i].Name;
-		cout << right << "Weight: " << cat[i].Percent << "%" << endl;
+		cout << fixed << showpoint << setprecision(2);
+		cout << right << "Grade: " << grade[i] << " / " << total[i];
+		cout << right << "  Grade Calc: " << grade_calc[i] << endl;
 	}
+	cout << right << "Total Grade: " << grade_weight*100 << "%" << endl;
+}
