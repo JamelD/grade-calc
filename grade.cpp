@@ -13,17 +13,19 @@ Grade Calculator
 using namespace std;
 
 void Menu(); //menu function
-void PrintCategory(const int, struct Category*);
-void PrintAssignment(const int, struct Assignment*);
-void PrintAssignmentByCategory(const int, struct Category*, const int, struct Assignment*);
-void PrintGrade(const int, struct Category*, const int, struct Assignment*);
+void PrintCategory(const int, struct Category*); // Prints out categories from file.
+void PrintAssignment(const int, struct Assignment*); // Prints out assignments from file.
+void PrintAssignmentByCategory(const int, struct Category*, const int, struct Assignment*); // Prints out assignments for selected category from file.
+void PrintGrade(const int, struct Category*, const int, struct Assignment*); // Prints out category points breakdown and final grade calc.
 
+// Struct to hold category data from file
 struct Category{ 
 	int Num;
 	string Name;
-	double Percent;
+	double Weight;
 };
 
+// Struct to hold assignment data from file
 struct Assignment{
 	string Name;
 	string Type;
@@ -60,7 +62,7 @@ int main(){
 	for(int i = 0; i < cat_size; i++){	//store data from file into array of strucs
 		fileName >> cat[i].Num;
 		fileName >> cat[i].Name;
-		fileName >> cat[i].Percent;
+		fileName >> cat[i].Weight;
 	}
 
     fileName >> assign_size;
@@ -128,7 +130,7 @@ void PrintCategory(const int cat_size, Category * cat){
 	for(int i = 0; i < cat_size; i++){
 		cout << left << cat[i].Num << "\t";
 		cout << left << setw(15) << cat[i].Name;
-		cout << right << "Weight: " << cat[i].Percent << "%" << endl;
+		cout << right << "Weight: " << cat[i].Weight << "%" << endl;
 	}
 }
 
@@ -152,10 +154,17 @@ void PrintAssignmentByCategory(const int cat_size, struct Category* cat, const i
 	for(int i = 0; i < cat_size; i++){
 		cout << left << cat[i].Num << "\t";
 		cout << left << setw(15) << cat[i].Name;
-		cout << right << "Weight: " << cat[i].Percent << "%" << endl;
+		cout << right << "Weight: " << cat[i].Weight << "" << endl;
 	}
     cout << "Select Category (use number): ";
     cin >> select;
+	
+	//File error checking
+	while(select < cat_size && select > -1){	
+		cout << "Invalid category selection" << endl;
+		cout << "Select Category (use number): ";
+    	cin >> select;
+	}
 
     cout << endl;
 	cout << "Assignments:" << endl;
@@ -164,8 +173,7 @@ void PrintAssignmentByCategory(const int cat_size, struct Category* cat, const i
             cout << left << setw(15) << assign[i].Name;
             cout << left << setw(15) << assign[i].Type;
             cout << fixed << showpoint << setprecision(2); 
-			cout << right << "Points : " << assign[i].Points_recv << " / ";
-            cout << right << assign[i].Total_points << endl;
+			cout << right << "Points : " << assign[i].Points_recv << " / " << assign[i].Total_points << endl;
         }	
 	}
 
@@ -191,13 +199,13 @@ void PrintGrade(const int cat_size, struct Category* cat, const int assign_size,
     for(int i = 0; i < cat_size; i++){
 		grade_calc[i] = 0;
 		grade_calc[i] += (grade[i]/total[i]);
-		grade_weight += (grade_calc[i]*cat[i].Percent);
+		grade_weight += (grade_calc[i]*cat[i].Weight);
 
 		cout << left << cat[i].Num << "\t";
 		cout << left << setw(15) << cat[i].Name;
 		cout << fixed << showpoint << setprecision(2);
-		cout << right << "Grade: " << grade[i] << " / " << total[i];
-		cout << right << "  Grade Calc: " << grade_calc[i] << endl;
+		cout << right << "Points: " << grade[i] << " / " << total[i];
+		cout << "\t" << grade_calc[i]*100 << "%" << endl;
 	}
 	cout << right << "Total Grade: " << grade_weight*100 << "%" << endl;
 }
