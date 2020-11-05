@@ -1,0 +1,32 @@
+4
+1 Assignment 0.45
+2 Lab 0.25
+3 Discussion 0.15
+4 Attendance 0.15
+25
+AttnWeek1 Attendance 10 10
+Attn0901 Attendance 5 5
+Attn0903 Attendance 5 5
+DraftA1 Assignment 1 1
+Attn0908 Attendance 5 5
+Attn0910 Attendance 5 5
+LabA1 Lab 90 90
+Attn0915 Attendance 0 5
+Attn0917 Attendance 5 5
+PeerIntRef Discussion 10 10
+Assign1 Assignment 45.25 49
+Attn0922 Attendance 5 5
+Attn0924 Attendance 5 5
+DraftA2 Assignment 1 1
+Attn0929 Attendance 6 6
+Attn1001 Attendance 5 5
+Attn1006 Attendance 5 5
+Attn1008 Attendance 5 5
+PeerEdRef1 Discussion 30 30
+LabA2 Lab 90 90
+Attn1013 Attendance 5 5
+Attn1015 Attendance 5 5
+EleSpRef Discussion 10 10
+Attn1020 Attendance 5 5
+Attn1022 Attendance 5 5
+Attn1027 Attendance 5 5
