@@ -13,7 +13,7 @@ Grade Calculator
 using namespace std;
 
 void OpenFile(); //open file function
-void Menu(); //menu function
+void FileMenu(); //menu function
 void PrintCategory(const int, struct Category*); // Prints out categories from file.
 void PrintAssignment(const int, struct Assignment*); // Prints out assignments from file.
 void PrintAssignmentByCategory(const int, struct Category*, const int, struct Assignment*); // Prints out assignments for selected category from file.
@@ -32,7 +32,32 @@ struct Assignment{ // Struct to hold assignment data from file
 };
 
 int main(){
-	OpenFile();
+	// make program able to open multiple file
+	char selection;
+	do{
+		cout << endl;
+		cout << "Main Menu:" << endl;
+    	cout << "1 - Open File" << endl;
+		cout << "Q - Quit Program" << endl;
+		
+		cout << "Selection > ";
+		cin >> selection; 
+		
+		//eror checking for invalid menu entries
+		while(selection != '1' && selection != 'q' && selection != 'Q'){
+			cout << "That is not a valid menu selecion!" << endl;
+			cout << "Selection > ";
+			cin >> selection; 
+		}
+		
+		//Menu Selection
+		if(selection == '1'){
+			OpenFile();
+		}else if(selection == 'q' || selection == 'Q'){
+			break; //
+		}
+		
+	}while(selection != 'q' || selection != 'Q');
 	
 	return 0;
 }
@@ -71,12 +96,12 @@ void OpenFile(){
         fileName >> assign[i].Total_points;
     }
 	do{ // file menu
-		Menu();
+		FileMenu();
 		cout << "Selection > ";
 		cin >> selection; 
 		
 		//eror checking for invalid menu entries
-		while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != 'q' && selection != 'Q'){
+		while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != 'c' && selection != 'C'){
 			cout << "That is not a valid menu selecion!" << endl;
 			cout << "Selection > ";
 			cin >> selection; 
@@ -91,25 +116,25 @@ void OpenFile(){
 			PrintAssignmentByCategory(cat_size, cat, assign_size, assign); //Print Assignments by Category
 		}else if(selection == '4'){
 			PrintGrade(cat_size, cat, assign_size, assign); // print grades function
-		}else if(selection == 'q' || selection == 'Q'){
+		}else if(selection == 'c' || selection == 'C'){
 			break; //
 		}
 		
-	}while(selection != 'q' || selection != 'Q');
+	}while(selection != 'c' || selection != 'C');
 	
 	delete [] cat;	//delete dynamic array of struct
     delete [] assign;	//delete dynamic array of struct
 	fileName.close(); 	//close the file filestream
 }
 
-void Menu(){ 
+void FileMenu(){ 
 	cout << endl;
-	cout << "Menu:" << endl;
+	cout << "File Menu:" << endl;
     cout << "1 - Print Categories" << endl;
 	cout << "2 - Print Assignments" << endl;
 	cout << "3 - Print Assignments by Category" << endl;
 	cout << "4 - Print Grades" << endl;
-	cout << "Q - Quit" << endl;
+	cout << "C - Close File" << endl;
 }
 
 void PrintCategory(const int cat_size, Category * cat){
