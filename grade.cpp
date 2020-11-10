@@ -12,21 +12,19 @@ Grade Calculator
 #include <fstream> 		//file Stream objects Library
 using namespace std;
 
+void OpenFile(); //open file function
 void Menu(); //menu function
 void PrintCategory(const int, struct Category*); // Prints out categories from file.
 void PrintAssignment(const int, struct Assignment*); // Prints out assignments from file.
 void PrintAssignmentByCategory(const int, struct Category*, const int, struct Assignment*); // Prints out assignments for selected category from file.
 void PrintGrade(const int, struct Category*, const int, struct Assignment*); // Prints out category points breakdown and final grade calc.
 
-// Struct to hold category data from file
-struct Category{ 
+struct Category{ // Struct to hold category data from file
 	int Num;
 	string Name;
 	double Weight;
 };
-
-// Struct to hold assignment data from file
-struct Assignment{
+struct Assignment{ // Struct to hold assignment data from file
 	string Name;
 	string Type;
 	double Points_recv;
@@ -34,7 +32,12 @@ struct Assignment{
 };
 
 int main(){
+	OpenFile();
 	
+	return 0;
+}
+
+void OpenFile(){
 	char selection;
 	int cat_size, assign_size; //hold size from file
 	string file; 		//var to take in name of input file
@@ -43,11 +46,8 @@ int main(){
 	cout << endl << "Enter the name of the file to open > ";
 	cin >> file;	//take in the name of the file to read
 	cout << endl;
-	
 	fileName.open(file.c_str());	//open the file
-	
-	//File error checking
-	while(!fileName){	
+	while(!fileName){	//File error checking
 		cout << "That file does not exist!" << endl;
 		cout << "Enter the name of the file to open > ";
 		cin >> file;
@@ -56,17 +56,13 @@ int main(){
 	}
 	
 	fileName >> cat_size; //first input from file, size of array
-	
 	Category *cat = new Category[cat_size]; //dynamic array of strucs
-	 
 	for(int i = 0; i < cat_size; i++){	//store data from file into array of strucs
 		fileName >> cat[i].Num;
 		fileName >> cat[i].Name;
 		fileName >> cat[i].Weight;
 	}
-
     fileName >> assign_size;
-
     Assignment *assign = new Assignment[assign_size];
     for(int i = 0; i < assign_size; i++){
         fileName >> assign[i].Name;
@@ -74,8 +70,7 @@ int main(){
         fileName >> assign[i].Points_recv;
         fileName >> assign[i].Total_points;
     }
-
-	do{
+	do{ // file menu
 		Menu();
 		cout << "Selection > ";
 		cin >> selection; 
@@ -87,31 +82,24 @@ int main(){
 			cin >> selection; 
 		}
 		
-		//user Selection
+		//Menu Selection
 		if(selection == '1'){
-			//Print Categories
-			PrintCategory(cat_size, cat);
+			PrintCategory(cat_size, cat); //Call Print Categories Function
 		}else if(selection == '2'){
-			//Print Assigments
-			PrintAssignment(assign_size, assign);
+			PrintAssignment(assign_size, assign); //call Print Assigments function
 		}else if(selection == '3'){
-			//Print Assignments by Category
-			PrintAssignmentByCategory(cat_size, cat, assign_size, assign);
+			PrintAssignmentByCategory(cat_size, cat, assign_size, assign); //Print Assignments by Category
 		}else if(selection == '4'){
-			//Print grades
-			PrintGrade(cat_size, cat, assign_size, assign);
+			PrintGrade(cat_size, cat, assign_size, assign); // print grades function
 		}else if(selection == 'q' || selection == 'Q'){
-	
-			break;
+			break; //
 		}
 		
 	}while(selection != 'q' || selection != 'Q');
 	
 	delete [] cat;	//delete dynamic array of struct
     delete [] assign;	//delete dynamic array of struct
-	fileName.close(); 	//close the file
-	
-	return 0;
+	fileName.close(); 	//close the file filestream
 }
 
 void Menu(){ 
@@ -159,12 +147,13 @@ void PrintAssignmentByCategory(const int cat_size, struct Category* cat, const i
     cout << "Select Category (use number): ";
     cin >> select;
 	
-	//File error checking
-	while(select < cat_size && select > -1){	
-		cout << "Invalid category selection" << endl;
-		cout << "Select Category (use number): ";
-    	cin >> select;
-	}
+	// Doesnt work.
+	//category selction error checking
+	// while(select > cat_size && select < 1){	
+	// 	cout << "Invalid category selection" << endl;
+	// 	cout << "Select Category (use number): ";
+    // 	cin >> select;
+	// }
 
     cout << endl;
 	cout << "Assignments:" << endl;
